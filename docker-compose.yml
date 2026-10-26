@@ -1,0 +1,21 @@
+# Run the whole app (built frontend + Flask backend) behind one service.
+#   docker compose up --build
+# Then open http://localhost:5000
+services:
+  app:
+    build: .
+    container_name: acm-gtc
+    ports:
+      - "5000:5000"
+    environment:
+      PORT: "5000"
+      HOST: "0.0.0.0"
+      DEBUG: "0"
+      QUIZ_DB: "/app/backend/db/quiz.db"
+    volumes:
+      - quiz-data:/app/backend/db
+
+    restart: unless-stopped
+
+volumes:
+  quiz-data:
